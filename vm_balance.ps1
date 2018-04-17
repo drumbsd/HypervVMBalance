@@ -44,7 +44,7 @@ do {
 
 				$Hostinfo = Get-WmiObject -class win32_computersystem -computername $node
 				Write-Host "Host " $Hostinfo.Name
-				$load = (@(gwmi -ns root\virtualization MSVM_Processor -computername $node).count / (@(gwmi Win32_Processor -computername $node) | measure -p NumberOfLogicalProcessors -sum).Sum)  
+				$load = (@(gwmi -ns root\virtualization\v2 MSVM_Processor -Filter "Description='Microsoft Virtual Processor'" -computername $node).count / (@(gwmi Win32_Processor -computername $node) | measure -p NumberOfLogicalProcessors -sum).Sum)  
 				Write-Host "Load " $load
 
 				if ($load -ge $maxload) 
